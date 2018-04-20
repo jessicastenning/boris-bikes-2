@@ -12,8 +12,22 @@ class DockingStation
   end
 
   def release_bike
+    puts "releasing bike"
      fail 'no bikes available' if empty? #@bikes.empty?
+     @bikes.each do |bike|
+
+       unless bike.broken?
+          @bikes.delete(bike)
+          return bike
+          break
+        end
+        if (bike == @bikes.last && bike.broken?)
+          raise 'Bike broken'
+        end
+     end
+    # fail 'Bike broken' if @bikes[-1].broken?
     @bikes.pop
+
   end
 
   def dock(bikes)
